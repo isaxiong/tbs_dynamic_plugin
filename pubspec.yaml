@@ -1,6 +1,6 @@
 name: tbs_dynamic_plugin
 description: A Flutter Plugin For X5WebView with dynamic load which base on Google 'webview_flutter' Plugin
-version: 0.0.1
+version: 0.0.2
 homepage:
 
 environment:

@@ -5,9 +5,9 @@
 Pod::Spec.new do |s|
   s.name             = 'tbs_dynamic_plugin'
   s.version          = '0.0.1'
-  s.summary          = 'A Flutter Plugin For X5WebView with dynamic load which base on Google 'webview_flutter' Plugin'
+  s.summary          = 'A Flutter Plugin For X5WebView with dynamic load which base on Google webview_flutter Plugin'
   s.description      = <<-DESC
-A Flutter Plugin For X5WebView with dynamic load which base on Google 'webview_flutter' Plugin
+A Flutter Plugin For X5WebView with dynamic load which base on Google webview_flutter Plugin
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }

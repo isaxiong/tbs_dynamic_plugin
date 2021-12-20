@@ -1,6 +1,6 @@
 # tbs_dynamic_plugin
 
-A Flutter Plugin For X5WebView with dynamic load x5 core which base on Google 'webview_flutter' Plugin
+A Flutter Plugin For X5WebView with dynamic load x5 core which base on Google webview_flutter Plugin
 
 ### 使用
 
