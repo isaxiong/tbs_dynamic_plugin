@@ -27,6 +27,7 @@ class TbsDynamicPlugin(): FlutterPlugin, MethodCallHandler, ActivityAware {
   }
 
   companion object {
+
     private const val CHANNEL_NAME = "tbs_dynamic"
     private const val CHANNEL_VIEW_NAME = "com.xiong.tbs_dynamic/x5webview"
     private var webViewFactory: WebViewFactory? = null
@@ -34,13 +35,21 @@ class TbsDynamicPlugin(): FlutterPlugin, MethodCallHandler, ActivityAware {
     //兼容旧版本注册
     @JvmStatic
     fun registerWith(registrar: PluginRegistry.Registrar) {
-      val plugin = TbsDynamicPlugin(registrar.activity())
+      registrar.activity()?.let {
+        val plugin = TbsDynamicPlugin(it)
 
-      webViewFactory = plugin.setupPluginViewFactory(registrar.messenger(), registrar.view(), registrar.activity()) as? WebViewFactory
-      registrar.addActivityResultListener(webViewFactory)
-      registrar.platformViewRegistry().registerViewFactory(CHANNEL_VIEW_NAME, webViewFactory)
+        webViewFactory = plugin.setupPluginViewFactory(
+          registrar.messenger(),
+          registrar.view(),
+          it
+        ) as? WebViewFactory
+        webViewFactory?.let { factory ->
+          registrar.addActivityResultListener(factory)
+          registrar.platformViewRegistry().registerViewFactory(CHANNEL_VIEW_NAME, factory)
+        }
 
-      plugin.setupChannel(registrar.messenger(), registrar.context())
+        plugin.setupChannel(registrar.messenger(), registrar.context())
+      }
     }
   }
 
@@ -89,8 +98,10 @@ class TbsDynamicPlugin(): FlutterPlugin, MethodCallHandler, ActivityAware {
 
   override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     webViewFactory = setupPluginViewFactory(binding.binaryMessenger, null, null) as? WebViewFactory
-    val registerResult = binding.platformViewRegistry.registerViewFactory(CHANNEL_VIEW_NAME, webViewFactory)
-    Log.d("xiong","register WebViewPlugin Result = $registerResult")
+    webViewFactory?.let {
+      val registerResult = binding.platformViewRegistry.registerViewFactory(CHANNEL_VIEW_NAME, it)
+      Log.d("xiong","register WebViewPlugin Result = $registerResult")
+    }
 
     setupChannel(binding.binaryMessenger, binding.applicationContext)
   }
